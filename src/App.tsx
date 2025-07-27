@@ -217,6 +217,42 @@ const App: React.FC = () => {
     });
   };
 
+  // Cancel a pending chore completion
+  const cancelPendingChore = (choreId: string) => {
+    const currentUser = appState.currentUser;
+    if (!currentUser) return;
+
+    // Find the pending completion for this chore by this user
+    const pendingCompletion = appState.choreCompletions.find(
+      c => c.choreId === choreId && 
+           c.userId === currentUser.id && 
+           !c.isApproved
+    );
+
+    if (!pendingCompletion) {
+      addNotification({
+        type: 'warning',
+        title: 'No Pending Chore',
+        message: 'No pending chore found to cancel.',
+        duration: 3000
+      });
+      return;
+    }
+
+    // Remove the pending completion
+    setAppState(prev => ({
+      ...prev,
+      choreCompletions: prev.choreCompletions.filter(c => c.id !== pendingCompletion.id)
+    }));
+
+    addNotification({
+      type: 'info',
+      title: 'Chore Cancelled! ❌',
+      message: 'Your pending chore has been cancelled.',
+      duration: 3000
+    });
+  };
+
   // Redeem a reward
   const redeemReward = (rewardId: string) => {
     const reward = appState.rewards.find(r => r.id === rewardId);
@@ -496,7 +532,9 @@ const App: React.FC = () => {
                 chores={appState.chores}
                 currentUser={appState.currentUser}
                 isParentMode={appState.isParentMode}
+                choreCompletions={appState.choreCompletions}
                 onCompleteChore={completeChore}
+                onCancelPendingChore={cancelPendingChore}
                 onAddChore={addChore}
                 onUpdateChore={updateChore}
                 onDeleteChore={deleteChore}

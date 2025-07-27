@@ -72,7 +72,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
             <div className="reward-meta">
               <span className="owl-cost">
                 <span className="owl-icon">🦉</span>
-                {reward.owlCost} points
+                {reward.owlCost} owls
               </span>
               <span className="reward-category">{reward.category}</span>
             </div>

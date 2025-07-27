@@ -77,7 +77,7 @@ const RewardsStore: React.FC<RewardsStoreProps> = ({
               Owl Store
             </h2>
             <p className="store-subtitle">
-              Trade your Owl points for magical rewards!
+              Trade your owls for magical rewards!
             </p>
           </div>
           
@@ -196,9 +196,9 @@ const RewardsStore: React.FC<RewardsStoreProps> = ({
               <h3>No rewards found</h3>
               <p>
                 {filter === 'affordable' 
-                  ? "You don't have enough Owl points for any rewards yet. Complete more chores!"
+                  ? "You don't have enough owls for any rewards yet. Complete more chores!"
                   : filter === 'expensive'
-                  ? "All rewards are affordable! Great job earning Owl points!"
+                  ? "All rewards are affordable! Great job earning owls!"
                   : categoryFilter !== 'all'
                   ? `No ${categoryFilter} rewards available.`
                   : "No rewards available. Add some magical rewards to get started!"

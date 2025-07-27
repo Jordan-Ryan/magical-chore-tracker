@@ -116,7 +116,7 @@ const AddChoreModal: React.FC<AddChoreModalProps> = ({
                   </div>
                   <div className="template-info">
                     <span className="template-name">{template.name}</span>
-                    <span className="template-points">{template.defaultOwlPoints} pts</span>
+                    <span className="template-points">{template.defaultOwlPoints} owls</span>
                   </div>
                 </motion.button>
               ))}
@@ -227,7 +227,7 @@ const AddChoreModal: React.FC<AddChoreModalProps> = ({
           <div className="form-section">
             <div className="settings-grid">
               <div className="form-group">
-                <label className="form-label">Owl Points</label>
+                <label className="form-label">Owls</label>
                 <input
                   type="number"
                   className="form-input"
@@ -237,7 +237,7 @@ const AddChoreModal: React.FC<AddChoreModalProps> = ({
                   max="50"
                   required
                 />
-                <span className="form-hint">How many points this chore is worth</span>
+                <span className="form-hint">How many owls this chore is worth</span>
               </div>
 
               <div className="form-group">
@@ -263,7 +263,7 @@ const AddChoreModal: React.FC<AddChoreModalProps> = ({
                 />
                 <span className="checkbox-text">Requires parent approval</span>
               </label>
-              <span className="form-hint">Child must get approval before earning points</span>
+              <span className="form-hint">Child must get approval before earning owls</span>
             </div>
           </div>
 
@@ -282,7 +282,7 @@ const AddChoreModal: React.FC<AddChoreModalProps> = ({
                 <div className="preview-meta">
                   <span className="preview-points">
                     <span className="owl-icon">🦉</span>
-                    {formData.owlPoints} points
+                    {formData.owlPoints} owls
                   </span>
                   <span className="preview-category">{formData.category}</span>
                 </div>

@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({
             <div className="owl-points-display">
               <div className="owl-icon animate-float">🦉</div>
               <div className="points-info">
-                <span className="points-label">Owl Points</span>
+                <span className="points-label">Owls</span>
                 <span className="points-value">{currentUser.totalOwlPoints}</span>
               </div>
             </div>

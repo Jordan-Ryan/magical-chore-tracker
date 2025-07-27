@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Chore, User } from '../types';
+import { Chore, User, ChoreCompletion } from '../types';
 import { DEFAULT_CHORES, MAGICAL_COLORS, MAGICAL_ICONS } from '../data/constants';
 import ChoreCard from './ChoreCard';
 import AddChoreModal from './AddChoreModal';
@@ -10,7 +10,9 @@ interface ChoresDashboardProps {
   chores: Chore[];
   currentUser: User | null;
   isParentMode: boolean;
+  choreCompletions: ChoreCompletion[];
   onCompleteChore: (choreId: string) => void;
+  onCancelPendingChore: (choreId: string) => void;
   onAddChore: (chore: Omit<Chore, 'id'>) => void;
   onUpdateChore: (choreId: string, updates: Partial<Chore>) => void;
   onDeleteChore: (choreId: string) => void;
@@ -21,7 +23,9 @@ const ChoresDashboard: React.FC<ChoresDashboardProps> = ({
   chores,
   currentUser,
   isParentMode,
+  choreCompletions,
   onCompleteChore,
+  onCancelPendingChore,
   onAddChore,
   onUpdateChore,
   onDeleteChore,
@@ -65,7 +69,7 @@ const ChoresDashboard: React.FC<ChoresDashboardProps> = ({
               Daily Chores
             </h2>
             <p className="dashboard-subtitle">
-              Complete tasks to earn magical Owl points!
+              Complete tasks to earn magical owls!
             </p>
           </div>
           
@@ -194,7 +198,9 @@ const ChoresDashboard: React.FC<ChoresDashboardProps> = ({
                   chore={chore}
                   currentUser={currentUser}
                   isParentMode={isParentMode}
+                  choreCompletions={choreCompletions}
                   onComplete={handleCompleteChore}
+                  onCancelPending={onCancelPendingChore}
                   onUpdate={onUpdateChore}
                   onDelete={onDeleteChore}
                 />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Chore, User } from '../types';
+import { Chore, User, ChoreCompletion } from '../types';
 import { format } from 'date-fns';
 import './ChoreCard.css';
 
@@ -8,7 +8,9 @@ interface ChoreCardProps {
   chore: Chore;
   currentUser: User | null;
   isParentMode: boolean;
+  choreCompletions: ChoreCompletion[];
   onComplete: (choreId: string) => void;
+  onCancelPending: (choreId: string) => void;
   onUpdate: (choreId: string, updates: Partial<Chore>) => void;
   onDelete: (choreId: string) => void;
 }
@@ -17,7 +19,9 @@ const ChoreCard: React.FC<ChoreCardProps> = ({
   chore,
   currentUser,
   isParentMode,
+  choreCompletions,
   onComplete,
+  onCancelPending,
   onUpdate,
   onDelete
 }) => {
@@ -69,6 +73,14 @@ const ChoreCard: React.FC<ChoreCardProps> = ({
     return `Last completed: ${format(chore.lastCompletedDate, 'MMM d')}`;
   };
 
+  // Check if this chore is pending approval for the current user
+  const isPendingApproval = choreCompletions.some(
+    completion => 
+      completion.choreId === chore.id && 
+      completion.userId === currentUser?.id && 
+      !completion.isApproved
+  );
+
   return (
     <>
       <motion.div
@@ -91,7 +103,7 @@ const ChoreCard: React.FC<ChoreCardProps> = ({
             <div className="chore-meta">
               <span className="owl-points">
                 <span className="owl-icon">🦉</span>
-                {chore.owlPoints} points
+                {chore.owlPoints} owls
               </span>
               {chore.category && (
                 <span className="chore-category">{chore.category}</span>
@@ -151,8 +163,8 @@ const ChoreCard: React.FC<ChoreCardProps> = ({
             <div className="dynamic-points">
               <span className="points-note">
                 {format(chore.lastCompletedDate, 'yyyy-MM-dd') === format(new Date(Date.now() - 24 * 60 * 60 * 1000), 'yyyy-MM-dd') 
-                  ? '70% points (recently completed)'
-                  : 'Full points available'
+                              ? '70% owls (recently completed)'
+            : 'Full owls available'
                 }
               </span>
             </div>
@@ -161,7 +173,7 @@ const ChoreCard: React.FC<ChoreCardProps> = ({
 
         {/* Card Footer */}
         <div className="card-footer">
-          {!chore.isCompleted && currentUser?.role === 'child' && (
+          {!chore.isCompleted && currentUser?.role === 'child' && !isPendingApproval && (
             <motion.button
               className="complete-btn"
               onClick={handleComplete}
@@ -177,6 +189,18 @@ const ChoreCard: React.FC<ChoreCardProps> = ({
                   Complete Chore
                 </>
               )}
+            </motion.button>
+          )}
+          
+          {isPendingApproval && currentUser?.role === 'child' && (
+            <motion.button
+              className="cancel-btn"
+              onClick={() => onCancelPending(chore.id)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="btn-icon">❌</span>
+              Cancel Pending
             </motion.button>
           )}
 
@@ -281,7 +305,7 @@ const EditChoreModal: React.FC<{
           </div>
 
           <div className="form-group">
-            <label className="form-label">Owl Points</label>
+            <label className="form-label">Owls</label>
             <input
               type="number"
               className="form-input"
