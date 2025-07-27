@@ -27,7 +27,7 @@ const App: React.FC = () => {
     const defaultUsers: User[] = [
       {
         id: uuidv4(),
-        name: 'Emma',
+        name: 'Esmé',
         role: 'child',
         totalOwlPoints: 0,
         earnedOwlPoints: 0,
@@ -181,7 +181,7 @@ const App: React.FC = () => {
     addNotification({
       type: 'success',
       title: 'Chore Completed! 🦉',
-      message: `You earned ${points} Owl points!`,
+      message: `You earned ${points} owls!`,
       duration: 3000
     });
   };
@@ -197,7 +197,7 @@ const App: React.FC = () => {
       addNotification({
         type: 'error',
         title: 'Not Enough Owls!',
-        message: `You need ${reward.owlCost - currentUser.totalOwlPoints} more Owl points!`,
+        message: `You need ${reward.owlCost - currentUser.totalOwlPoints} more owls!`,
         duration: 3000
       });
       return;

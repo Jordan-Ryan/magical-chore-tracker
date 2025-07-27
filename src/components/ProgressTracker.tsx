@@ -147,14 +147,14 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
               <TrendingUp className="stat-icon" />
               <div>
                 <span className="stat-value">{stats.weeklyPoints}</span>
-                <span className="stat-label">Owl Points Earned</span>
+                <span className="stat-label">Owls Earned</span>
               </div>
             </div>
             <div className="stat-item">
               <Zap className="stat-icon" />
               <div>
                 <span className="stat-value">{stats.weeklySpent}</span>
-                <span className="stat-label">Points Spent</span>
+                <span className="stat-label">Owls Spent</span>
               </div>
             </div>
           </div>
@@ -213,7 +213,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
               <Star className="stat-icon-large" />
               <div className="stat-content">
                 <span className="stat-number">{stats.averagePointsPerChore}</span>
-                <span className="stat-title">Avg Points/Chore</span>
+                <span className="stat-title">Avg Owls/Chore</span>
               </div>
             </div>
           </div>
@@ -268,7 +268,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <h3>🦉 Owl Points Summary</h3>
+          <h3>🦉 Owl Summary</h3>
           <div className="points-breakdown">
             <div className="points-item earned">
               <span className="points-label">Total Earned</span>
