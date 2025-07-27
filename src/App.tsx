@@ -39,6 +39,18 @@ const App: React.FC = () => {
       },
       {
         id: uuidv4(),
+        name: 'Alex',
+        role: 'child',
+        totalOwlPoints: 0,
+        earnedOwlPoints: 0,
+        spentOwlPoints: 0,
+        completedChores: 0,
+        currentStreak: 0,
+        longestStreak: 0,
+        joinDate: new Date()
+      },
+      {
+        id: uuidv4(),
         name: 'Parent',
         role: 'parent',
         totalOwlPoints: 0,
