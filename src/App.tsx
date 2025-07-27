@@ -63,18 +63,27 @@ const App: React.FC = () => {
       }
     ];
 
-    const defaultChores: Chore[] = DEFAULT_CHORES.map(template => ({
-      id: uuidv4(),
-      name: template.name,
-      description: template.description,
-      owlPoints: template.defaultOwlPoints,
-      isCompleted: false,
-      requiresApproval: false,
-      category: template.category,
-      icon: template.icon,
-      color: template.color,
-      streak: 0
-    }));
+    // Create separate chores for each child
+    const childUsers = defaultUsers.filter(user => user.role === 'child');
+    const defaultChores: Chore[] = [];
+    
+    childUsers.forEach(child => {
+      DEFAULT_CHORES.forEach(template => {
+        defaultChores.push({
+          id: uuidv4(),
+          name: template.name,
+          description: template.description,
+          owlPoints: template.defaultOwlPoints,
+          isCompleted: false,
+          requiresApproval: true,
+          category: template.category,
+          icon: template.icon,
+          color: template.color,
+          streak: 0,
+          userId: child.id // Associate chore with specific child
+        });
+      });
+    });
 
     const defaultRewards: Reward[] = DEFAULT_REWARDS.map(template => ({
       id: uuidv4(),
@@ -372,13 +381,17 @@ const App: React.FC = () => {
 
   // Add new chore (parent only)
   const addChore = (chore: Omit<Chore, 'id'>) => {
-    const newChore: Chore = {
+    // When parent adds a chore, create it for all children
+    const childUsers = appState.users.filter(user => user.role === 'child');
+    const newChores: Chore[] = childUsers.map(child => ({
       ...chore,
-      id: uuidv4()
-    };
+      id: uuidv4(),
+      userId: child.id
+    }));
+    
     setAppState(prev => ({
       ...prev,
-      chores: [...prev.chores, newChore]
+      chores: [...prev.chores, ...newChores]
     }));
   };
 
@@ -435,7 +448,8 @@ const App: React.FC = () => {
         isCompleted: false,
         completedAt: undefined,
         completedBy: undefined,
-        isApproved: undefined
+        isApproved: undefined,
+        lastCompletedDate: undefined
       }))
     }));
   };

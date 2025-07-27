@@ -34,14 +34,17 @@ const ChoresDashboard: React.FC<ChoresDashboardProps> = ({
   const [showAddModal, setShowAddModal] = useState(false);
   const [filter, setFilter] = useState<'all' | 'completed' | 'pending'>('all');
 
-  const filteredChores = chores.filter(chore => {
+  // Filter chores for current user only
+  const userChores = chores.filter(chore => chore.userId === currentUser?.id);
+  
+  const filteredChores = userChores.filter(chore => {
     if (filter === 'completed') return chore.isCompleted;
     if (filter === 'pending') return !chore.isCompleted;
     return true;
   });
 
-  const completedCount = chores.filter(chore => chore.isCompleted).length;
-  const totalCount = chores.length;
+  const completedCount = userChores.filter(chore => chore.isCompleted).length;
+  const totalCount = userChores.length;
   const completionPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
   const handleCompleteChore = (choreId: string) => {

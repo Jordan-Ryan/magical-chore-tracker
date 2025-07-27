@@ -13,6 +13,7 @@ export interface Chore {
   color: string;
   lastCompletedDate?: Date;
   streak: number;
+  userId: string; // Associate chore with specific child
 }
 
 export interface Reward {
