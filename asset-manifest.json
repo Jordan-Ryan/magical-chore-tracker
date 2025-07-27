@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/magical-chore-tracker/static/css/main.502db3c0.css",
+    "main.js": "/magical-chore-tracker/static/js/main.e499625e.js",
+    "index.html": "/magical-chore-tracker/index.html",
+    "main.502db3c0.css.map": "/magical-chore-tracker/static/css/main.502db3c0.css.map",
+    "main.e499625e.js.map": "/magical-chore-tracker/static/js/main.e499625e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.502db3c0.css",
+    "static/js/main.e499625e.js"
+  ]
+}
