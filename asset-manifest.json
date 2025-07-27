@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/magical-chore-tracker/static/css/main.d93eaf23.css",
-    "main.js": "/magical-chore-tracker/static/js/main.3305c8e5.js",
+    "main.js": "/magical-chore-tracker/static/js/main.ab447c31.js",
     "index.html": "/magical-chore-tracker/index.html",
     "main.d93eaf23.css.map": "/magical-chore-tracker/static/css/main.d93eaf23.css.map",
-    "main.3305c8e5.js.map": "/magical-chore-tracker/static/js/main.3305c8e5.js.map"
+    "main.ab447c31.js.map": "/magical-chore-tracker/static/js/main.ab447c31.js.map"
   },
   "entrypoints": [
     "static/css/main.d93eaf23.css",
-    "static/js/main.3305c8e5.js"
+    "static/js/main.ab447c31.js"
   ]
 }
