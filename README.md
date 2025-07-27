@@ -41,16 +41,19 @@ A delightful and engaging chore tracking application designed specifically for c
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 🌐 **Live Demo**
+**Try the app right now!** → [https://jordan-ryan.github.io/magical-chore-tracker](https://jordan-ryan.github.io/magical-chore-tracker)
+
+### 📋 **Prerequisites**
 - Node.js (version 14 or higher)
 - npm or yarn package manager
 
-### Installation
+### 🛠️ **Local Development**
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd chore-chart-for-kids
+   git clone https://github.com/Jordan-Ryan/magical-chore-tracker.git
+   cd magical-chore-tracker
    ```
 
 2. **Install dependencies**
@@ -66,6 +69,11 @@ A delightful and engaging chore tracking application designed specifically for c
 4. **Open your browser**
    Navigate to `http://localhost:3000` to see the app in action!
 
+### 🚀 **Quick Start (One Command)**
+```bash
+git clone https://github.com/Jordan-Ryan/magical-chore-tracker.git && cd magical-chore-tracker && npm install && npm start
+```
+
 ### Building for Production
 
 ```bash
@@ -73,6 +81,41 @@ npm run build
 ```
 
 This creates an optimized production build in the `build` folder.
+
+### 🌐 **Deploy to GitHub Pages**
+
+The app is automatically configured for GitHub Pages deployment:
+
+```bash
+npm run deploy
+```
+
+This will build the app and deploy it to `https://jordan-ryan.github.io/magical-chore-tracker`
+
+### 📱 **Running from Git (Multiple Options)**
+
+#### **Option 1: Direct Clone & Run**
+```bash
+git clone https://github.com/Jordan-Ryan/magical-chore-tracker.git
+cd magical-chore-tracker
+npm install
+npm start
+```
+
+#### **Option 2: Using npx (No Installation Required)**
+```bash
+npx create-react-app magical-chore-tracker --template typescript
+cd magical-chore-tracker
+git clone https://github.com/Jordan-Ryan/magical-chore-tracker.git temp
+cp -r temp/src . && cp temp/package.json . && cp temp/tsconfig.json .
+npm install
+npm start
+```
+
+#### **Option 3: Download & Run**
+1. Download the ZIP from GitHub
+2. Extract and navigate to the folder
+3. Run `npm install && npm start`
 
 ## 🎮 How to Use
 
