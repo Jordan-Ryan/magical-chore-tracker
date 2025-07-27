@@ -2,6 +2,21 @@
 
 A delightful and engaging chore tracking application designed specifically for children, featuring magical owl rewards, spell-casting animations, and a gamified experience that makes completing chores fun!
 
+## 🚀 **Quick Start - Try It Now!**
+
+### 🌐 **Live Demo**
+**[Click here to try the app instantly!](https://jordan-ryan.github.io/magical-chore-tracker)**
+
+### 💻 **Run Locally (One Command)**
+```bash
+git clone https://github.com/Jordan-Ryan/magical-chore-tracker.git && cd magical-chore-tracker && npm install && npm start
+```
+
+### 📱 **Download & Run**
+1. Click the green "Code" button above
+2. Download ZIP
+3. Extract and run: `npm install && npm start`
+
 ## ✨ Features
 
 ### 🏠 Chore Management
