@@ -9,6 +9,7 @@ interface AddChoreModalProps {
   defaultChores: ChoreTemplate[];
   magicalColors: string[];
   magicalIcons: string[];
+  currentUserId?: string; // Add current user ID for parent mode
 }
 
 const AddChoreModal: React.FC<AddChoreModalProps> = ({
@@ -16,7 +17,8 @@ const AddChoreModal: React.FC<AddChoreModalProps> = ({
   onAdd,
   defaultChores,
   magicalColors,
-  magicalIcons
+  magicalIcons,
+  currentUserId
 }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -49,7 +51,8 @@ const AddChoreModal: React.FC<AddChoreModalProps> = ({
       category: formData.category,
       icon: formData.icon,
       color: formData.color,
-      streak: 0
+      streak: 0,
+      userId: currentUserId || '' // Include userId (will be set by parent when creating for all children)
     };
 
     onAdd(newChore);

@@ -249,6 +249,7 @@ const ChoresDashboard: React.FC<ChoresDashboardProps> = ({
             defaultChores={DEFAULT_CHORES}
             magicalColors={MAGICAL_COLORS}
             magicalIcons={MAGICAL_ICONS}
+            currentUserId={currentUser?.id}
           />
         )}
       </AnimatePresence>
