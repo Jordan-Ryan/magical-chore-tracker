@@ -60,7 +60,7 @@
   position: absolute;
   font-size: 1.5rem;
   filter: drop-shadow(0 0 10px currentColor);
-  animation: float 20s ease-in-out infinite;
+
 }
 
 .spell-ring {

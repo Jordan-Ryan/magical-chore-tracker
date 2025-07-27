@@ -259,14 +259,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* Animation keyframes */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
+
 
 @keyframes sparkle {
   0%, 100% {
@@ -319,7 +312,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .animate-float {
-  animation: float 20s ease-in-out infinite;
+
 }
 
 .animate-sparkle {
