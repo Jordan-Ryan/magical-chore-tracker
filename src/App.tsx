@@ -143,13 +143,42 @@ const App: React.FC = () => {
       points = Math.max(1, Math.floor(points * 0.7)); // 30% reduction
     }
 
+    // Check if parent approval is required for children
+    if (chore.requiresApproval && currentUser.role === 'child') {
+      // Create pending completion record
+      const choreCompletion = {
+        id: uuidv4(),
+        choreId,
+        userId: currentUser.id,
+        completedAt: now,
+        owlPointsEarned: points,
+        isApproved: false
+      };
+
+      setAppState(prev => ({
+        ...prev,
+        choreCompletions: [...prev.choreCompletions, choreCompletion]
+      }));
+
+      addNotification({
+        type: 'info',
+        title: 'Chore Submitted! 📋',
+        message: 'Your chore has been submitted for parent approval.',
+        duration: 3000
+      });
+      
+      return;
+    }
+
+    // Auto-approve for parents or chores that don't require approval
     const updatedChore: Chore = {
       ...chore,
       isCompleted: true,
       completedAt: now,
       completedBy: currentUser.id,
       lastCompletedDate: now,
-      streak: lastCompleted && isYesterday(lastCompleted) ? chore.streak + 1 : 1
+      streak: lastCompleted && isYesterday(lastCompleted) ? chore.streak + 1 : 1,
+      isApproved: true
     };
 
     const updatedUser: User = {
@@ -167,7 +196,9 @@ const App: React.FC = () => {
       userId: currentUser.id,
       completedAt: now,
       owlPointsEarned: points,
-      isApproved: !chore.requiresApproval
+      isApproved: true,
+      approvedBy: currentUser.id,
+      approvedAt: now
     };
 
     setAppState(prev => ({
@@ -361,6 +392,72 @@ const App: React.FC = () => {
     }));
   };
 
+  // Approve or reject a pending chore completion
+  const approveChoreCompletion = (completionId: string, approved: boolean) => {
+    const completion = appState.choreCompletions.find(c => c.id === completionId);
+    const currentUser = appState.currentUser;
+    
+    if (!completion || !currentUser || currentUser.role !== 'parent') return;
+
+    const chore = appState.chores.find(c => c.id === completion.choreId);
+    const childUser = appState.users.find(u => u.id === completion.userId);
+    
+    if (!chore || !childUser) return;
+
+    if (approved) {
+      // Approve the completion
+      const updatedCompletion = {
+        ...completion,
+        isApproved: true,
+        approvedBy: currentUser.id,
+        approvedAt: new Date()
+      };
+
+      const updatedChore: Chore = {
+        ...chore,
+        isCompleted: true,
+        completedAt: completion.completedAt,
+        completedBy: completion.userId,
+        lastCompletedDate: completion.completedAt,
+        isApproved: true
+      };
+
+      const updatedChildUser: User = {
+        ...childUser,
+        totalOwlPoints: childUser.totalOwlPoints + completion.owlPointsEarned,
+        earnedOwlPoints: childUser.earnedOwlPoints + completion.owlPointsEarned,
+        completedChores: childUser.completedChores + 1
+      };
+
+      setAppState(prev => ({
+        ...prev,
+        chores: prev.chores.map(c => c.id === chore.id ? updatedChore : c),
+        users: prev.users.map(u => u.id === childUser.id ? updatedChildUser : u),
+        choreCompletions: prev.choreCompletions.map(c => c.id === completionId ? updatedCompletion : c)
+      }));
+
+      addNotification({
+        type: 'success',
+        title: 'Chore Approved! ✅',
+        message: `${childUser.name} earned ${completion.owlPointsEarned} owls!`,
+        duration: 3000
+      });
+    } else {
+      // Reject the completion
+      setAppState(prev => ({
+        ...prev,
+        choreCompletions: prev.choreCompletions.filter(c => c.id !== completionId)
+      }));
+
+      addNotification({
+        type: 'warning',
+        title: 'Chore Rejected! ❌',
+        message: `${childUser.name}'s chore was not approved.`,
+        duration: 3000
+      });
+    }
+  };
+
   return (
     <div className="app">
       <Toaster position="top-center" />
@@ -458,6 +555,7 @@ const App: React.FC = () => {
                 appState={appState}
                 setAppState={setAppState}
                 isParentMode={appState.isParentMode}
+                onApproveChoreCompletion={approveChoreCompletion}
               />
             </motion.div>
           )}

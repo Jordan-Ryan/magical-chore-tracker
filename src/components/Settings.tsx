@@ -12,7 +12,9 @@ import {
   Edit,
   User as UserIcon,
   Baby,
-  Crown
+  Crown,
+  CheckCircle,
+  X
 } from 'lucide-react';
 import { AppState, User, Chore, Reward } from '../types';
 import { v4 as uuidv4 } from 'uuid';
@@ -22,10 +24,11 @@ interface SettingsProps {
   appState: AppState;
   setAppState: React.Dispatch<React.SetStateAction<AppState>>;
   isParentMode: boolean;
+  onApproveChoreCompletion?: (completionId: string, approved: boolean) => void;
 }
 
-const Settings: React.FC<SettingsProps> = ({ appState, setAppState, isParentMode }) => {
-  const [activeSection, setActiveSection] = useState<'general' | 'users' | 'appearance' | 'notifications'>('general');
+const Settings: React.FC<SettingsProps> = ({ appState, setAppState, isParentMode, onApproveChoreCompletion }) => {
+  const [activeSection, setActiveSection] = useState<'general' | 'users' | 'approvals' | 'appearance' | 'notifications'>('general');
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [newUserName, setNewUserName] = useState('');
   const [newUserRole, setNewUserRole] = useState<'child' | 'parent'>('child');
@@ -158,6 +161,13 @@ const Settings: React.FC<SettingsProps> = ({ appState, setAppState, isParentMode
           >
             <Users className="nav-icon" />
             <span>Users</span>
+          </button>
+          <button 
+            className={`nav-item ${activeSection === 'approvals' ? 'active' : ''}`}
+            onClick={() => setActiveSection('approvals')}
+          >
+            <CheckCircle className="nav-icon" />
+            <span>Approvals</span>
           </button>
           <button 
             className={`nav-item ${activeSection === 'appearance' ? 'active' : ''}`}
@@ -306,6 +316,72 @@ const Settings: React.FC<SettingsProps> = ({ appState, setAppState, isParentMode
                     </motion.div>
                   ))}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {activeSection === 'approvals' && (
+            <div className="settings-section">
+              <h3>Pending Approvals</h3>
+              
+              <div className="setting-group">
+                <h4>Chore Completion Requests</h4>
+                {appState.choreCompletions.filter(c => !c.isApproved).length === 0 ? (
+                  <div className="empty-approvals">
+                    <CheckCircle className="empty-icon" />
+                    <p>No pending approvals! All chores are up to date.</p>
+                  </div>
+                ) : (
+                  <div className="approvals-list">
+                    {appState.choreCompletions
+                      .filter(c => !c.isApproved)
+                      .map(completion => {
+                        const chore = appState.chores.find(ch => ch.id === completion.choreId);
+                        const child = appState.users.find(u => u.id === completion.userId);
+                        
+                        if (!chore || !child) return null;
+                        
+                        return (
+                          <motion.div 
+                            key={completion.id}
+                            className="approval-item"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <div className="approval-info">
+                              <div className="approval-header">
+                                <span className="chore-name">{chore.name}</span>
+                                <span className="child-name">by {child.name}</span>
+                              </div>
+                              <div className="approval-details">
+                                <span className="owl-points">🦉 {completion.owlPointsEarned} owls</span>
+                                <span className="completion-time">
+                                  {new Date(completion.completedAt).toLocaleString()}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="approval-actions">
+                              <button 
+                                className="action-btn success"
+                                onClick={() => onApproveChoreCompletion?.(completion.id, true)}
+                              >
+                                <CheckCircle className="btn-icon" />
+                                Approve
+                              </button>
+                              <button 
+                                className="action-btn danger"
+                                onClick={() => onApproveChoreCompletion?.(completion.id, false)}
+                              >
+                                <X className="btn-icon" />
+                                Reject
+                              </button>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                  </div>
+                )}
               </div>
             </div>
           )}

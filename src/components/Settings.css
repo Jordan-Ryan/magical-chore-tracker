@@ -491,4 +491,99 @@
   .info-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Approvals Section */
+.approvals-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.approval-item {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.approval-info {
+  flex: 1;
+}
+
+.approval-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.chore-name {
+  font-weight: 600;
+  color: var(--white);
+  font-size: var(--font-size-lg);
+}
+
+.child-name {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-size-sm);
+}
+
+.approval-details {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.owl-points {
+  color: var(--primary-purple);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.completion-time {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--font-size-xs);
+}
+
+.approval-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.empty-approvals {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .approval-item {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .approval-actions {
+    justify-content: center;
+  }
+  
+  .approval-header {
+    justify-content: center;
+  }
+  
+  .approval-details {
+    justify-content: center;
+  }
 } 
